@@ -18,9 +18,9 @@ Read the final assignment instructions from the course webpages [https://autogis
 
 *Note: Don't upload large files into GitHub! If you are using large input files, provide downloading instructions and perhaps a small sample of the data in this repository for demonstrating your workflow.*
 
-## Topic: Comparison of attributes between parks and streetspaces in Helsinki YLRE (yleisten alueiden rekisteri / Public area register)
+## Topic: 
 
-### Input data: https://hri.fi/data/dataset/helsingin-kaupungin-yleisten-alueiden-rekisteri/resource/bccf9215-c1c8-4c19-92db-89d2cce2b150 wfs:https://kartta.hel.fi/ws/geoserver/avoindata/wfs
+### Input data:
 
 ### Analysis steps:
 
