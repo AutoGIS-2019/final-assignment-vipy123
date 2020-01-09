@@ -1,0 +1,14 @@
+!table
+!version 300
+!charset ISO8859_1
+
+Definition Table
+  Type NATIVE Charset "ISO8859_1"
+  Fields 7
+    gml_id Char (254) ;
+    tunniste Integer ;
+    luokka1 Char (254) ;
+    luokka2 Char (254) ;
+    lisatieto1 Char (254) ;
+    lisatieto2 Char (254) ;
+    toteutunut_esteettomyys Char (254) ;
