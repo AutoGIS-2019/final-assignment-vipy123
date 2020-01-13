@@ -1,9 +1,0 @@
-{
-"type": "FeatureCollection",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "u": 3196174340, "v": 913578188, "key": 0, "osmid": "8035247", "highway": "footway", "oneway": false, "length": 6.557, "lanes": null, "maxspeed": null, "width": null, "junction": null, "weighted_length": 6.557, "esteeton": false }, "geometry": { "type": "LineString", "coordinates": [ [ 24.9295165, 60.173235 ], [ 24.9294094, 60.1732097 ] ] } },
-{ "type": "Feature", "properties": { "u": 3196174340, "v": 308783762, "key": 0, "osmid": "28788947", "highway": "footway", "oneway": false, "length": 2.043, "lanes": null, "maxspeed": null, "width": null, "junction": null, "weighted_length": 2.043, "esteeton": false }, "geometry": { "type": "LineString", "coordinates": [ [ 24.9295165, 60.173235 ], [ 24.9295066, 60.1732527 ] ] } },
-{ "type": "Feature", "properties": { "u": 3196174340, "v": 296556313, "key": 0, "osmid": "28788947", "highway": "footway", "oneway": false, "length": 99.141, "lanes": null, "maxspeed": null, "width": null, "junction": null, "weighted_length": 99.141, "esteeton": false }, "geometry": { "type": "LineString", "coordinates": [ [ 24.9295165, 60.173235 ], [ 24.9303159, 60.172717 ], [ 24.9304895, 60.1725929 ], [ 24.9305168, 60.1725585 ], [ 24.9304744, 60.1725127 ] ] } }
-]
-}

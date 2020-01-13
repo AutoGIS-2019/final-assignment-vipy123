@@ -34,12 +34,14 @@
         
     <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"/>
-
-    <form name="search" action="~/search_engine.py" method="post">
-        <input type="text" name="Origin address" placeholder="Search origin address">
-        <input type="text" name="Destination address" placeholder="Search destination address">
+    
+    <h2>Search for an unobstructed route in Helsinki center</h2>
+    <form name="search" action="~/home.py" method="post">
+        <input type="text" name="origaddress" placeholder="Search origin address">
+        <input type="text" name="destaddress" placeholder="Search destination address">
         <input type="submit" value="Search">
-        </form> 
+    </form> 
+    <h3></h3>
 </head>
 <body>    
     
