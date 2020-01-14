@@ -24,6 +24,7 @@ from folium.utilities import parse_options
 from folium import plugins
 import cgi
 from fiona._drivers import GDALEnv
+import momepy
 env = GDALEnv()
 
 def search_for_path(oA, dA):
@@ -74,7 +75,7 @@ def search_for_path(oA, dA):
 
 	
 	#Here we create the graph
-	graph = 
+	graph = momepy.gdf_to_nx(edges, approach='primal')
 
 	#...And finally the shortest path
 	route = nx.shortest_path(G=graph, source=oNearest, target=dNearest, 
