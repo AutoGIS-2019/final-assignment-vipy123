@@ -13,24 +13,6 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "/home/vipy/.local/share/jupyter\n"
-     ]
-    }
-   ],
-   "source": [
-    "from jupyter_core.paths import jupyter_data_dir\n",
-    "print(jupyter_data_dir())"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": null,
    "metadata": {},
    "outputs": [],
@@ -1343,28 +1325,7 @@
     "from folium import plugins\n",
     "import cgi\n",
     "from osgeo import gdal\n",
-    "import momepy\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "ModuleNotFoundError",
-     "evalue": "No module named 'pysal'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-4-a9e22df3d4bc>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mpysal\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'pysal'"
-     ]
-    }
-   ],
-   "source": [
-    "import pysal"
+    "# Now we can start visualizing\n"
    ]
   },
   {
@@ -2594,17 +2555,6 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 54,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# I figured that I could do a modified graph of my own to better consider the accessibility for network analysis.\n",
-    "edges['weighted_length'] = pd.Series()\n",
-    "edges['esteeton'] = pd.Series()"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 55,
    "metadata": {},
    "outputs": [
@@ -2647,437 +2597,11 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 57,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# I added values for weighted length of unobstructed routes: \"weighted length\" which would be the original length devided by three. Let's see if that is enough for the \n",
-    "# shortest path analysis. This takes a long time bacause of the length of the data, so It is better to save it as a file so we \n",
-    "# don't need to do this every time.\n",
-    "\n",
-    "for index, row in edges.iterrows():\n",
-    "    point_1 = Point(row['geometry'].coords[0][0], row['geometry'].coords[0][1])\n",
-    "    point_2 = Point(row['geometry'].coords[1][0], row['geometry'].coords[1][1])\n",
-    "    if([index. row].isinstance(list)):\n",
-    "        \n",
-    "    if point_1.within(esteetonAluekartalle) and point_2.within(esteetonAluekartalle):\n",
-    "        #print(row['length'] / 2)\n",
-    "        edges.loc[index, 'weighted_length'] = row['length'] / 3\n",
-    "        edges.loc[index, 'esteeton'] = True\n",
-    "    else:\n",
-    "        edges.loc[index, 'weighted_length'] = row['length']\n",
-    "        edges.loc[index, 'esteeton'] = False"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 58,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# Let's drop some of the useless data.\n",
-    "edges = edges.drop(['tunnel', 'name', 'bridge', 'est_width'], axis=1)\n",
-    "edges = edges.drop(['service', 'access', 'ref'], axis=1)\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 59,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "edges = edges.drop(['lanes', 'maxspeed', 'junction'], axis=1)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 64,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>u</th>\n",
-       "      <th>v</th>\n",
-       "      <th>key</th>\n",
-       "      <th>osmid</th>\n",
-       "      <th>highway</th>\n",
-       "      <th>oneway</th>\n",
-       "      <th>length</th>\n",
-       "      <th>geometry</th>\n",
-       "      <th>weighted_length</th>\n",
-       "      <th>esteeton</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>0</th>\n",
-       "      <td>3196174340</td>\n",
-       "      <td>913578188</td>\n",
-       "      <td>0</td>\n",
-       "      <td>8035247</td>\n",
-       "      <td>footway</td>\n",
-       "      <td>False</td>\n",
-       "      <td>6.557</td>\n",
-       "      <td>LINESTRING (24.92952 60.17323, 24.92941 60.17321)</td>\n",
-       "      <td>6.557</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>3196174340</td>\n",
-       "      <td>308783762</td>\n",
-       "      <td>0</td>\n",
-       "      <td>28788947</td>\n",
-       "      <td>footway</td>\n",
-       "      <td>False</td>\n",
-       "      <td>2.043</td>\n",
-       "      <td>LINESTRING (24.92952 60.17323, 24.92951 60.17325)</td>\n",
-       "      <td>2.043</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>3196174340</td>\n",
-       "      <td>296556313</td>\n",
-       "      <td>0</td>\n",
-       "      <td>28788947</td>\n",
-       "      <td>footway</td>\n",
-       "      <td>False</td>\n",
-       "      <td>99.141</td>\n",
-       "      <td>LINESTRING (24.92952 60.17323, 24.93032 60.172...</td>\n",
-       "      <td>99.141</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>3196174341</td>\n",
-       "      <td>3196174350</td>\n",
-       "      <td>0</td>\n",
-       "      <td>[313613081, 313613084]</td>\n",
-       "      <td>service</td>\n",
-       "      <td>False</td>\n",
-       "      <td>16.615</td>\n",
-       "      <td>LINESTRING (24.92993 60.17325, 24.92975 60.173...</td>\n",
-       "      <td>16.615</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>4</th>\n",
-       "      <td>296043616</td>\n",
-       "      <td>295064653</td>\n",
-       "      <td>0</td>\n",
-       "      <td>317591141</td>\n",
-       "      <td>footway</td>\n",
-       "      <td>False</td>\n",
-       "      <td>63.276</td>\n",
-       "      <td>LINESTRING (24.93189 60.17067, 24.93254 60.17021)</td>\n",
-       "      <td>21.092</td>\n",
-       "      <td>True</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "            u           v  key                   osmid  highway  oneway  \\\n",
-       "0  3196174340   913578188    0                 8035247  footway   False   \n",
-       "1  3196174340   308783762    0                28788947  footway   False   \n",
-       "2  3196174340   296556313    0                28788947  footway   False   \n",
-       "3  3196174341  3196174350    0  [313613081, 313613084]  service   False   \n",
-       "4   296043616   295064653    0               317591141  footway   False   \n",
-       "\n",
-       "   length                                           geometry  weighted_length  \\\n",
-       "0   6.557  LINESTRING (24.92952 60.17323, 24.92941 60.17321)            6.557   \n",
-       "1   2.043  LINESTRING (24.92952 60.17323, 24.92951 60.17325)            2.043   \n",
-       "2  99.141  LINESTRING (24.92952 60.17323, 24.93032 60.172...           99.141   \n",
-       "3  16.615  LINESTRING (24.92993 60.17325, 24.92975 60.173...           16.615   \n",
-       "4  63.276  LINESTRING (24.93189 60.17067, 24.93254 60.17021)           21.092   \n",
-       "\n",
-       "   esteeton  \n",
-       "0     False  \n",
-       "1     False  \n",
-       "2     False  \n",
-       "3     False  \n",
-       "4      True  "
-      ]
-     },
-     "execution_count": 64,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "edges.head()"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 60,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "edges = edges.drop(['width'], axis=1)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 71,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "AttributeError",
-     "evalue": "module 'networkx' has no attribute 'read'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-71-6b7e6121f07d>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mgraph1\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnx\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mread\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Lahtotiedot/HelsinkiCenterEdges.shp\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;31mAttributeError\u001b[0m: module 'networkx' has no attribute 'read'"
-     ]
-    }
-   ],
-   "source": [
-    "#graph1 = nx.read(\"Lahtotiedot/HelsinkiCenterEdges.shp\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 75,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "UnicodeDecodeError",
-     "evalue": "'utf-8' codec can't decode byte 0xe2 in position 23: invalid continuation byte",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mUnicodeDecodeError\u001b[0m                        Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-75-bc68d9cd6d9c>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mgraph1\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnx\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mread_weighted_edgelist\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Lahtotiedot/HelsinkiCenterEdges.shp\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/networkx/readwrite/edgelist.py\u001b[0m in \u001b[0;36mread_weighted_edgelist\u001b[0;34m(path, comments, delimiter, create_using, nodetype, encoding)\u001b[0m\n\u001b[1;32m    457\u001b[0m                          \u001b[0mnodetype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnodetype\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    458\u001b[0m                          \u001b[0mdata\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'weight'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfloat\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 459\u001b[0;31m                          \u001b[0mencoding\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    460\u001b[0m                          )\n\u001b[1;32m    461\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m</home/vipy/anaconda3/lib/python3.7/site-packages/decorator.py:decorator-gen-743>\u001b[0m in \u001b[0;36mread_edgelist\u001b[0;34m(path, comments, delimiter, create_using, nodetype, data, edgetype, encoding)\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/networkx/utils/decorators.py\u001b[0m in \u001b[0;36m_open_file\u001b[0;34m(func_to_be_decorated, *args, **kwargs)\u001b[0m\n\u001b[1;32m    238\u001b[0m         \u001b[0;31m# Finally, we call the original function, making sure to close the fobj\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    239\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 240\u001b[0;31m             \u001b[0mresult\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mfunc_to_be_decorated\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mnew_args\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    241\u001b[0m         \u001b[0;32mfinally\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    242\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0mclose_fobj\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/networkx/readwrite/edgelist.py\u001b[0m in \u001b[0;36mread_edgelist\u001b[0;34m(path, comments, delimiter, create_using, nodetype, data, edgetype, encoding)\u001b[0m\n\u001b[1;32m    367\u001b[0m     return parse_edgelist(lines, comments=comments, delimiter=delimiter,\n\u001b[1;32m    368\u001b[0m                           \u001b[0mcreate_using\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcreate_using\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnodetype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnodetype\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 369\u001b[0;31m                           data=data)\n\u001b[0m\u001b[1;32m    370\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    371\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/networkx/readwrite/edgelist.py\u001b[0m in \u001b[0;36mparse_edgelist\u001b[0;34m(lines, comments, delimiter, create_using, nodetype, data)\u001b[0m\n\u001b[1;32m    247\u001b[0m     \u001b[0;32mfrom\u001b[0m \u001b[0mast\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mliteral_eval\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    248\u001b[0m     \u001b[0mG\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnx\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mempty_graph\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcreate_using\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 249\u001b[0;31m     \u001b[0;32mfor\u001b[0m \u001b[0mline\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mlines\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    250\u001b[0m         \u001b[0mp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mline\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfind\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcomments\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    251\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mp\u001b[0m \u001b[0;34m>=\u001b[0m \u001b[0;36m0\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/networkx/readwrite/edgelist.py\u001b[0m in \u001b[0;36m<genexpr>\u001b[0;34m(.0)\u001b[0m\n\u001b[1;32m    364\u001b[0m     \u001b[0mtypes\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mg\u001b[0m\u001b[0;34m.\u001b[0m \u001b[0mint\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfloat\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstr\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfrozenset\u001b[0m \u001b[0;34m-\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mtuples\u001b[0m \u001b[0mof\u001b[0m \u001b[0mthose\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0metc\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    365\u001b[0m     \"\"\"\n\u001b[0;32m--> 366\u001b[0;31m     \u001b[0mlines\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0mline\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0misinstance\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mline\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstr\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0mline\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdecode\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mencoding\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mline\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mpath\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    367\u001b[0m     return parse_edgelist(lines, comments=comments, delimiter=delimiter,\n\u001b[1;32m    368\u001b[0m                           \u001b[0mcreate_using\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcreate_using\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnodetype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnodetype\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mUnicodeDecodeError\u001b[0m: 'utf-8' codec can't decode byte 0xe2 in position 23: invalid continuation byte"
-     ]
-    }
-   ],
-   "source": [
-    "\n",
-    "graph1 = nx.read_weighted_edgelist(\"Lahtotiedot/HelsinkiCenterEdges.shp\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 63,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "ValueError",
-     "evalue": "The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mValueError\u001b[0m                                Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-63-ae519e391085>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#print(edges.loc[edges['oneway']==True])\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;31m#print(edges.loc[(edges['u']==3196174340) and (edges['v']==913578188)])\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0medges\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mloc\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0medges\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'u'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m==\u001b[0m\u001b[0;36m913578188\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0medges\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'v'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m==\u001b[0m\u001b[0;36m3196174340\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/pandas/core/generic.py\u001b[0m in \u001b[0;36m__nonzero__\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m   1553\u001b[0m             \u001b[0;34m\"The truth value of a {0} is ambiguous. \"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1554\u001b[0m             \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\".format(\n\u001b[0;32m-> 1555\u001b[0;31m                 \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__class__\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__name__\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1556\u001b[0m             )\n\u001b[1;32m   1557\u001b[0m         )\n",
-      "\u001b[0;31mValueError\u001b[0m: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
-     ]
-    }
-   ],
-   "source": [
-    "#print(edges.loc[edges['oneway']==True])\n",
-    "#print(edges.loc[(edges['u']==3196174340) and (edges['v']==913578188)])\n",
-    "print(edges.loc[(edges['u']==913578188) and (edges['v']==3196174340)])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 105,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "NameError",
-     "evalue": "name 'momepy' is not defined",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-105-c123f6202743>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mgraph1\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mmomepy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgdf_to_nx\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0medges\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mapproach\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'primal'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;31mNameError\u001b[0m: name 'momepy' is not defined"
-     ]
-    }
-   ],
-   "source": [
-    "graph1 = momepy.gdf_to_nx(edges, approach='primal')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 151,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "edgesGraphMode = pd.DataFrame(columns={'source', 'target', 'weight', 'osmid',\n",
-    "                                       'oneway', 'esteeton'})"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 152,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>esteeton</th>\n",
-       "      <th>oneway</th>\n",
-       "      <th>weight</th>\n",
-       "      <th>target</th>\n",
-       "      <th>osmid</th>\n",
-       "      <th>source</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "Empty DataFrame\n",
-       "Columns: [esteeton, oneway, weight, target, osmid, source]\n",
-       "Index: []"
-      ]
-     },
-     "execution_count": 152,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "edgesGraphMode"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 154,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "KeyError",
-     "evalue": "(0, 'weighted_length')",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py\u001b[0m in \u001b[0;36mget_value\u001b[0;34m(self, series, key)\u001b[0m\n\u001b[1;32m   4735\u001b[0m             \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 4736\u001b[0;31m                 \u001b[0;32mreturn\u001b[0m \u001b[0mlibindex\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_value_box\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0ms\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkey\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   4737\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mIndexError\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/index.pyx\u001b[0m in \u001b[0;36mpandas._libs.index.get_value_box\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/index.pyx\u001b[0m in \u001b[0;36mpandas._libs.index.get_value_at\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/util.pxd\u001b[0m in \u001b[0;36mpandas._libs.util.get_value_at\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/util.pxd\u001b[0m in \u001b[0;36mpandas._libs.util.validate_indexer\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;31mTypeError\u001b[0m: 'tuple' object cannot be interpreted as an integer",
-      "\nDuring handling of the above exception, another exception occurred:\n",
-      "\u001b[0;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-154-a60d84f6c806>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      4\u001b[0m                         \u001b[0;34m'source'\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mrow\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'u'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m                         \u001b[0;34m'target'\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mrow\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'v'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 6\u001b[0;31m                         \u001b[0;34m'weight'\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mrow\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mindex\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'weighted_length'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      7\u001b[0m                         })\n\u001b[1;32m      8\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/pandas/core/series.py\u001b[0m in \u001b[0;36m__getitem__\u001b[0;34m(self, key)\u001b[0m\n\u001b[1;32m   1069\u001b[0m         \u001b[0mkey\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcom\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mapply_if_callable\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mkey\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1070\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1071\u001b[0;31m             \u001b[0mresult\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mindex\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_value\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkey\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1072\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1073\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mis_scalar\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mresult\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py\u001b[0m in \u001b[0;36mget_value\u001b[0;34m(self, series, key)\u001b[0m\n\u001b[1;32m   4742\u001b[0m                     \u001b[0;32mraise\u001b[0m \u001b[0mInvalidIndexError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mkey\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   4743\u001b[0m                 \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 4744\u001b[0;31m                     \u001b[0;32mraise\u001b[0m \u001b[0me1\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   4745\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mException\u001b[0m\u001b[0;34m:\u001b[0m  \u001b[0;31m# pragma: no cover\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   4746\u001b[0m                 \u001b[0;32mraise\u001b[0m \u001b[0me1\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py\u001b[0m in \u001b[0;36mget_value\u001b[0;34m(self, series, key)\u001b[0m\n\u001b[1;32m   4728\u001b[0m         \u001b[0mk\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_convert_scalar_indexer\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mk\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkind\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"getitem\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   4729\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 4730\u001b[0;31m             \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_engine\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_value\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0ms\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mk\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mtz\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mgetattr\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mseries\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"tz\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   4731\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mKeyError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me1\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   4732\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0mlen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m>\u001b[0m \u001b[0;36m0\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mholds_integer\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mis_boolean\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/index.pyx\u001b[0m in \u001b[0;36mpandas._libs.index.IndexEngine.get_value\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/index.pyx\u001b[0m in \u001b[0;36mpandas._libs.index.IndexEngine.get_value\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/index.pyx\u001b[0m in \u001b[0;36mpandas._libs.index.IndexEngine.get_loc\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/hashtable_class_helper.pxi\u001b[0m in \u001b[0;36mpandas._libs.hashtable.PyObjectHashTable.get_item\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;32mpandas/_libs/hashtable_class_helper.pxi\u001b[0m in \u001b[0;36mpandas._libs.hashtable.PyObjectHashTable.get_item\u001b[0;34m()\u001b[0m\n",
-      "\u001b[0;31mKeyError\u001b[0m: (0, 'weighted_length')"
-     ]
-    }
-   ],
-   "source": [
-    "for index, row in edges.iterrows():\n",
-    "    x,y = row.geometry.coords.xy\n",
-    "    data = pd.DataFrame({'osmid': row['osmid'], \n",
-    "                        'source': row['u'],\n",
-    "                        'target': row['v'],\n",
-    "                        'weight': row[index, 'weighted_length'],\n",
-    "                        })\n",
-    "\n",
-    "    edgesGraphMode = edgesGraphMode.append(data)\n",
-    "\n",
-    "edgesGraphMode.tail()"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 131,
    "metadata": {},
    "outputs": [],
    "source": [
-    "import networkx as nx\n",
-    "import pysal\n",
-    "\n",
-    "#build contiguity matrix - uses rook contiguity - queen is available\n",
-    "\n",
-    "graph1 = nx.from_pandas_edgelist(edgesGraphMode, source= 'source', target= 'target', edge_attr='weight')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 132,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "TypeError",
-     "evalue": "float() argument must be a string or a number, not 'NoneType'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-132-44abc639337a>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mfig\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0max\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mox\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mplot_graph\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mgraph1\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/osmnx/plot.py\u001b[0m in \u001b[0;36mplot_graph\u001b[0;34m(G, bbox, fig_height, fig_width, margin, axis_off, equal_aspect, bgcolor, show, save, close, file_format, filename, dpi, annotate, node_color, node_size, node_alpha, node_edgecolor, node_zorder, edge_color, edge_linewidth, edge_alpha, use_geom)\u001b[0m\n\u001b[1;32m    353\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    354\u001b[0m     \u001b[0mlog\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'Begin plotting the graph...'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 355\u001b[0;31m     \u001b[0mnode_Xs\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0mfloat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0m_\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mx\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mG\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mnodes\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'x'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    356\u001b[0m     \u001b[0mnode_Ys\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0mfloat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0my\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0m_\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mG\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mnodes\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'y'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    357\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.7/site-packages/osmnx/plot.py\u001b[0m in \u001b[0;36m<listcomp>\u001b[0;34m(.0)\u001b[0m\n\u001b[1;32m    353\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    354\u001b[0m     \u001b[0mlog\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'Begin plotting the graph...'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 355\u001b[0;31m     \u001b[0mnode_Xs\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0mfloat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0m_\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mx\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mG\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mnodes\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'x'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    356\u001b[0m     \u001b[0mnode_Ys\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0mfloat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0my\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0m_\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mG\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mnodes\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'y'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    357\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mTypeError\u001b[0m: float() argument must be a string or a number, not 'NoneType'"
-     ]
-    }
-   ],
-   "source": [
-    "fig, ax = ox.plot_graph(graph)"
+    "import networkx as nx\n"
    ]
   },
   {
@@ -3120,198 +2644,6 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 56,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>u</th>\n",
-       "      <th>v</th>\n",
-       "      <th>key</th>\n",
-       "      <th>osmid</th>\n",
-       "      <th>highway</th>\n",
-       "      <th>oneway</th>\n",
-       "      <th>length</th>\n",
-       "      <th>geometry</th>\n",
-       "      <th>lanes</th>\n",
-       "      <th>maxspeed</th>\n",
-       "      <th>width</th>\n",
-       "      <th>junction</th>\n",
-       "      <th>weighted_length</th>\n",
-       "      <th>esteeton</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>12683</th>\n",
-       "      <td>282731027</td>\n",
-       "      <td>282731205</td>\n",
-       "      <td>0</td>\n",
-       "      <td>[25918664, 58015513, 329750716]</td>\n",
-       "      <td>[service, tertiary]</td>\n",
-       "      <td>False</td>\n",
-       "      <td>15.760</td>\n",
-       "      <td>LINESTRING (24.92933 60.16843, 24.92926 60.168...</td>\n",
-       "      <td>[2, 1]</td>\n",
-       "      <td>30</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>roundabout</td>\n",
-       "      <td>5.253333</td>\n",
-       "      <td>True</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>12867</th>\n",
-       "      <td>282731205</td>\n",
-       "      <td>282731027</td>\n",
-       "      <td>0</td>\n",
-       "      <td>[25918664, 58015513, 329750716]</td>\n",
-       "      <td>[tertiary, service]</td>\n",
-       "      <td>False</td>\n",
-       "      <td>15.760</td>\n",
-       "      <td>LINESTRING (24.92933 60.16835, 24.92924 60.168...</td>\n",
-       "      <td>[2, 1]</td>\n",
-       "      <td>30</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>roundabout</td>\n",
-       "      <td>5.253333</td>\n",
-       "      <td>True</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>14640</th>\n",
-       "      <td>559442012</td>\n",
-       "      <td>559442015</td>\n",
-       "      <td>0</td>\n",
-       "      <td>43997240</td>\n",
-       "      <td>service</td>\n",
-       "      <td>False</td>\n",
-       "      <td>28.877</td>\n",
-       "      <td>LINESTRING (24.93081 60.16631, 24.93088 60.166...</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>roundabout</td>\n",
-       "      <td>28.877000</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>14641</th>\n",
-       "      <td>559442012</td>\n",
-       "      <td>559442015</td>\n",
-       "      <td>1</td>\n",
-       "      <td>43997240</td>\n",
-       "      <td>service</td>\n",
-       "      <td>False</td>\n",
-       "      <td>53.784</td>\n",
-       "      <td>LINESTRING (24.93081 60.16631, 24.93073 60.166...</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>roundabout</td>\n",
-       "      <td>53.784000</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>14643</th>\n",
-       "      <td>559442015</td>\n",
-       "      <td>559442012</td>\n",
-       "      <td>0</td>\n",
-       "      <td>43997240</td>\n",
-       "      <td>service</td>\n",
-       "      <td>False</td>\n",
-       "      <td>53.784</td>\n",
-       "      <td>LINESTRING (24.93070 60.16652, 24.93058 60.166...</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>roundabout</td>\n",
-       "      <td>53.784000</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>14644</th>\n",
-       "      <td>559442015</td>\n",
-       "      <td>559442012</td>\n",
-       "      <td>1</td>\n",
-       "      <td>43997240</td>\n",
-       "      <td>service</td>\n",
-       "      <td>False</td>\n",
-       "      <td>28.877</td>\n",
-       "      <td>LINESTRING (24.93070 60.16652, 24.93082 60.166...</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>roundabout</td>\n",
-       "      <td>28.877000</td>\n",
-       "      <td>False</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "               u          v  key                            osmid  \\\n",
-       "12683  282731027  282731205    0  [25918664, 58015513, 329750716]   \n",
-       "12867  282731205  282731027    0  [25918664, 58015513, 329750716]   \n",
-       "14640  559442012  559442015    0                         43997240   \n",
-       "14641  559442012  559442015    1                         43997240   \n",
-       "14643  559442015  559442012    0                         43997240   \n",
-       "14644  559442015  559442012    1                         43997240   \n",
-       "\n",
-       "                   highway  oneway  length  \\\n",
-       "12683  [service, tertiary]   False  15.760   \n",
-       "12867  [tertiary, service]   False  15.760   \n",
-       "14640              service   False  28.877   \n",
-       "14641              service   False  53.784   \n",
-       "14643              service   False  53.784   \n",
-       "14644              service   False  28.877   \n",
-       "\n",
-       "                                                geometry   lanes maxspeed  \\\n",
-       "12683  LINESTRING (24.92933 60.16843, 24.92926 60.168...  [2, 1]       30   \n",
-       "12867  LINESTRING (24.92933 60.16835, 24.92924 60.168...  [2, 1]       30   \n",
-       "14640  LINESTRING (24.93081 60.16631, 24.93088 60.166...     NaN      NaN   \n",
-       "14641  LINESTRING (24.93081 60.16631, 24.93073 60.166...     NaN      NaN   \n",
-       "14643  LINESTRING (24.93070 60.16652, 24.93058 60.166...     NaN      NaN   \n",
-       "14644  LINESTRING (24.93070 60.16652, 24.93082 60.166...     NaN      NaN   \n",
-       "\n",
-       "      width    junction  weighted_length  esteeton  \n",
-       "12683   NaN  roundabout         5.253333      True  \n",
-       "12867   NaN  roundabout         5.253333      True  \n",
-       "14640   NaN  roundabout        28.877000     False  \n",
-       "14641   NaN  roundabout        53.784000     False  \n",
-       "14643   NaN  roundabout        53.784000     False  \n",
-       "14644   NaN  roundabout        28.877000     False  "
-      ]
-     },
-     "execution_count": 56,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "#edges.loc[edges['junction'].notnull()]"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 60,
    "metadata": {},
    "outputs": [
@@ -3344,88 +2676,6 @@
    ],
    "source": [
     "edges = edges.to_crs(epsg=4326)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 71,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "pandas.core.series.Series"
-      ]
-     },
-     "execution_count": 71,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "#type(edges['highway'].loc[edges['highway']=='service'])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 72,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "<class 'geopandas.geodataframe.GeoDataFrame'>\n",
-      "RangeIndex: 23208 entries, 0 to 23207\n",
-      "Data columns (total 14 columns):\n",
-      "u                  23208 non-null int64\n",
-      "v                  23208 non-null int64\n",
-      "key                23208 non-null int64\n",
-      "osmid              23208 non-null object\n",
-      "highway            23208 non-null object\n",
-      "oneway             23208 non-null bool\n",
-      "length             23208 non-null float64\n",
-      "geometry           23208 non-null geometry\n",
-      "lanes              3996 non-null object\n",
-      "maxspeed           5446 non-null object\n",
-      "width              146 non-null object\n",
-      "junction           6 non-null object\n",
-      "weighted_length    23208 non-null float64\n",
-      "esteeton           23208 non-null bool\n",
-      "dtypes: bool(2), float64(2), geometry(1), int64(3), object(6)\n",
-      "memory usage: 2.2+ MB\n",
-      "None\n",
-      "            u           v  key                   osmid  highway  oneway  \\\n",
-      "0  3196174340   913578188    0                 8035247  footway   False   \n",
-      "1  3196174340   308783762    0                28788947  footway   False   \n",
-      "2  3196174340   296556313    0                28788947  footway   False   \n",
-      "3  3196174341  3196174350    0  [313613081, 313613084]  service   False   \n",
-      "4   296043616   295064653    0               317591141  footway   False   \n",
-      "\n",
-      "   length                                           geometry lanes maxspeed  \\\n",
-      "0   6.557  LINESTRING (25496087.601 6673375.669, 25496081...   NaN      NaN   \n",
-      "1   2.043  LINESTRING (25496087.601 6673375.669, 25496087...   NaN      NaN   \n",
-      "2  99.141  LINESTRING (25496087.601 6673375.669, 25496131...   NaN      NaN   \n",
-      "3  16.615  LINESTRING (25496110.449 6673376.759, 25496100...   NaN      NaN   \n",
-      "4  63.276  LINESTRING (25496218.911 6673090.286, 25496255...   NaN      NaN   \n",
-      "\n",
-      "  width junction  weighted_length  esteeton  \n",
-      "0   NaN      NaN            6.557     False  \n",
-      "1   NaN      NaN            2.043     False  \n",
-      "2   NaN      NaN           99.141     False  \n",
-      "3   NaN      NaN           16.615     False  \n",
-      "4   NaN      NaN           21.092      True  \n"
-     ]
-    }
-   ],
-   "source": [
-    "print(edges.info())\n",
-    "print(edges.head())\n",
-    "for index, row in edges.iterrows():\n",
-    "    if isinstance(row['highway'], list):\n",
-    "        edges.loc[index, 'highway'] = row['highway'][0]\n",
-    "    if  isinstance(row['osmid'], list):\n",
-    "        edges.loc[index, 'osmid'] = row['osmid'][0]\n"
    ]
   },
   {
@@ -3570,208 +2820,6 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 97,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "edges.to_file(\"Lahtotiedot/HelsinkiCenterEdges.shp\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 96,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "4184"
-      ]
-     },
-     "execution_count": 96,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "len(edges.loc[edges['esteeton']==True])\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 98,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>y</th>\n",
-       "      <th>x</th>\n",
-       "      <th>osmid</th>\n",
-       "      <th>highway</th>\n",
-       "      <th>ref</th>\n",
-       "      <th>geometry</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>3196174340</th>\n",
-       "      <td>60.173235</td>\n",
-       "      <td>24.929516</td>\n",
-       "      <td>3196174340</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.92952 60.17323)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3196174341</th>\n",
-       "      <td>60.173245</td>\n",
-       "      <td>24.929928</td>\n",
-       "      <td>3196174341</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.92993 60.17325)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>296043616</th>\n",
-       "      <td>60.170675</td>\n",
-       "      <td>24.931887</td>\n",
-       "      <td>296043616</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.93189 60.17067)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3127525384</th>\n",
-       "      <td>60.179884</td>\n",
-       "      <td>24.956763</td>\n",
-       "      <td>3127525384</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.95676 60.17988)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3127525387</th>\n",
-       "      <td>60.179936</td>\n",
-       "      <td>24.956634</td>\n",
-       "      <td>3127525387</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.95663 60.17994)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3048751116</th>\n",
-       "      <td>60.169830</td>\n",
-       "      <td>24.949406</td>\n",
-       "      <td>3048751116</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.94941 60.16983)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3127525389</th>\n",
-       "      <td>60.179949</td>\n",
-       "      <td>24.956434</td>\n",
-       "      <td>3127525389</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.95643 60.17995)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3196174350</th>\n",
-       "      <td>60.173356</td>\n",
-       "      <td>24.929726</td>\n",
-       "      <td>3196174350</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.92973 60.17336)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3048751119</th>\n",
-       "      <td>60.169882</td>\n",
-       "      <td>24.947362</td>\n",
-       "      <td>3048751119</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.94736 60.16988)</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>1172652047</th>\n",
-       "      <td>60.180773</td>\n",
-       "      <td>24.948285</td>\n",
-       "      <td>1172652047</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>NaN</td>\n",
-       "      <td>POINT (24.94828 60.18077)</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "                    y          x       osmid highway  ref  \\\n",
-       "3196174340  60.173235  24.929516  3196174340     NaN  NaN   \n",
-       "3196174341  60.173245  24.929928  3196174341     NaN  NaN   \n",
-       "296043616   60.170675  24.931887   296043616     NaN  NaN   \n",
-       "3127525384  60.179884  24.956763  3127525384     NaN  NaN   \n",
-       "3127525387  60.179936  24.956634  3127525387     NaN  NaN   \n",
-       "3048751116  60.169830  24.949406  3048751116     NaN  NaN   \n",
-       "3127525389  60.179949  24.956434  3127525389     NaN  NaN   \n",
-       "3196174350  60.173356  24.929726  3196174350     NaN  NaN   \n",
-       "3048751119  60.169882  24.947362  3048751119     NaN  NaN   \n",
-       "1172652047  60.180773  24.948285  1172652047     NaN  NaN   \n",
-       "\n",
-       "                             geometry  \n",
-       "3196174340  POINT (24.92952 60.17323)  \n",
-       "3196174341  POINT (24.92993 60.17325)  \n",
-       "296043616   POINT (24.93189 60.17067)  \n",
-       "3127525384  POINT (24.95676 60.17988)  \n",
-       "3127525387  POINT (24.95663 60.17994)  \n",
-       "3048751116  POINT (24.94941 60.16983)  \n",
-       "3127525389  POINT (24.95643 60.17995)  \n",
-       "3196174350  POINT (24.92973 60.17336)  \n",
-       "3048751119  POINT (24.94736 60.16988)  \n",
-       "1172652047  POINT (24.94828 60.18077)  "
-      ]
-     },
-     "execution_count": 98,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "nodes.head(10)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 99,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "nodes.to_file(\"Lahtotiedot/HelsinkiCenterNodes.shp\")"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": null,
    "metadata": {},
    "outputs": [],
@@ -3821,7 +2869,8 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# Here I tested some random addresses\n",
+    "# Here I tested some random addresses that one can test the app with\n",
+    "# One can change these addresses as long as they are in Helsinki center.\n",
     "origAddress = \"Rautatientori, Helsinki\"\n",
     "destAddress = \"Punavuorenkatu 19, Helsinki\"\n",
     "\n",
@@ -3845,59 +2894,6 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "G = nx.Graph()\n",
-    "\n",
-    "for node in nodes:\n",
-    "    # the geometry property here may be specific to my shapefile\n",
-    "    node1 = node['geometry']\n",
-    "\n",
-    "        G.add_node(node1)\n",
-    "        \n",
-    "\n",
-    "for n in edges:\n",
-    "    state = n[1]['block']\n",
-    "    for o in G.nodes(data=True):\n",
-    "      other = o[1]['block']\n",
-    "      if state is not other and state.touches(other):\n",
-    "        G.add_edge(n[0], o[0])"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 138,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "networkx.classes.graph.Graph"
-      ]
-     },
-     "execution_count": 138,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "type(graph1)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 144,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from networkx import MultiDiGraph\n",
-    "graph2 = MultiDiGraph(graph1)"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 221,
    "metadata": {},
    "outputs": [
@@ -3916,7 +2912,8 @@
     }
    ],
    "source": [
-    "\n",
+    "# So here is the app to find path. \n",
+    "#It shows on the maps which parts are unobstructed and which are not\n",
     "\n",
     "\n",
     "\n",
@@ -3924,11 +2921,6 @@
     "orig_yx = (orig['geometry'].at[0].y, orig['geometry'].at[0].x)\n",
     "dest_yx = (dest['geometry'].at[0].y, dest['geometry'].at[0].x)\n",
     "\n",
-    "\n",
-    "#oNearest = nx.k_nearest_neighbors(graph1, source='in+out', \n",
-    "#                                   target='in+out', nodes=orig_yx, weight=None)\n",
-    "#dNearest = nx.k_nearest_neighbors(graph1, source='in+out', \n",
-    "#                                   target='in+out', nodes=dest_yx, weight=None)\n",
     "\n",
     "oNearest = ox.get_nearest_node(graph, orig_yx, method='euclidean')\n",
     "dNearest = ox.get_nearest_node(graph, dest_yx, method='euclidean')\n",
@@ -3938,15 +2930,12 @@
     "\n",
     "odNodes = gpd.GeoDataFrame([origo, destination], geometry='geometry', crs=nodes.crs)\n",
     "\n",
-    "#lenght, path = nx.bidirectional_dijkstra(graph1, source='source', target='target', \n",
-    "#                                         weight='weight')\n",
-    "#route = path\n",
+    "\n",
     "route = nx.shortest_path(G=graph, source=oNearest, target=dNearest, weight='length')\n",
     "\n",
     "\n",
     "path = []\n",
-    "#listX = []\n",
-    "#listY = []\n",
+    "\n",
     "\n",
     "for i in range(len(route)-1):\n",
     "    point = nodes.loc[route[i]].geometry\n",
@@ -3977,49 +2966,15 @@
     "    if point1.within(esteetonAluekartalle) and point2.within(esteetonAluekartalle):\n",
     "        attr = {'fill': 'black', 'font-weight': 'bold', 'font-size': '16'}\n",
     "        pline = folium.PolyLine(pathP, weight=8, color='green', opacity=0.6).add_to(m)\n",
-    "        #plineX = folium.plugins.PolyLineTextPath(pline, \"Esteetön\", repeat=False, center=True, below=False,\n",
-    "        #                                         offset=0, orientation=0, weight=8, color='green', opacity=0.6, attributes=attr).add_to(m)\n",
-    "        #print(plineX)\n",
+    "\n",
     "    else:\n",
     "        attr = {'fill': 'black', 'font-weight': 'bold', 'font-size': '16'}\n",
     "        pline = folium.PolyLine(pathP, weight=8, color='red', opacity=0.6).add_to(m)\n",
-    "        #plineX = folium.plugins.PolyLineTextPath(pline, \"Ei-esteetön\", repeat=False, center=True, below=False,\n",
-    "        #                                 offset=0, orientation=0, weight=8, color='red', opacity=0.6, attributes=attr).add_to(m)\n",
-    "\n",
+    "        \n",
     "endMarker = folium.Marker(location= [path[len(path)-1][0], path[len(path)-1][1]], popup='Määränpää: ' + destAddress).add_to(m)\n",
-    "#esteetonreititGJ.add_to(m)\n",
+    "\n",
     "\n",
     "m"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "len(route)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "m1 = folium.Map(location= [path[0][0], path[0][1]], zoom_start=14, min_zoom = 13, \n",
-    "               max_zoom= 20, control_scale=True, tiles=\"CartoDB Positron\")\n",
-    "Marker([orig['geometry'].at[0].y, orig['geometry'].at[0].x], popup='Lähtöpaikka', color='green').add_to(m1)\n",
-    "m1.add_child(pline)\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "path[0][1]"
    ]
   },
   {
@@ -4029,15 +2984,6 @@
    "outputs": [],
    "source": [
     "m.save(\"valitulostus1.html\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "#search_zoom= 18, searchlabel=\"\", collapsed=True, geom_type='GeoJson',, placeholder=\"Search for an address\""
    ]
   },
   {
