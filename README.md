@@ -4,9 +4,9 @@
 
 Once you are finished with the final assignment, edit this readme and add "x" to the correct box:
 
-* [ ] Submitted
+* [x] Submitted
 
-* [x] I'm still working on my final assignment. 
+* [ ] I'm still working on my final assignment. 
 
 ### Instructions
 
@@ -18,11 +18,13 @@ Read the final assignment instructions from the course webpages [https://autogis
 
 *Note: Don't upload large files into GitHub! If you are using large input files, provide downloading instructions and perhaps a small sample of the data in this repository for demonstrating your workflow.*
 
-## Topic: Comparison of attributes between parks and streetspaces in Helsinki YLRE (yleisten alueiden rekisteri / Public area register)
+## Topic: Unobstructed pedestrian routes in Helsinki center
 
-### Input data: https://hri.fi/data/dataset/helsingin-kaupungin-yleisten-alueiden-rekisteri/resource/bccf9215-c1c8-4c19-92db-89d2cce2b150 wfs:https://kartta.hel.fi/ws/geoserver/avoindata/wfs
+### Input data:Esteettömyysaineistot exel-taulukoina Helsingin kaupungilta.
 
 ### Analysis steps:
+Aineiston tuonti, käsittely, yhdistely, reittianalyysi
 
 ### Results:
+Esteettömyyskartta Helsingin keskustasta sekä reittikartta, joka näyttää, mitkä kohdat kävelyreitistä ovat esteetömiä ja mitkä eivät. Vihreällä näkyy esteetön reitti ja punaisella ei-esteetön reitti.
 
