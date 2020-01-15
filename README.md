@@ -26,5 +26,5 @@ Read the final assignment instructions from the course webpages [https://autogis
 Aineiston tuonti, käsittely, yhdistely, reittianalyysi
 
 ### Results:
-Esteettömyyskartta Helsingin keskustasta sekä reittikartta, joka näyttää, mitkä kohdat kävelyreitistä ovat esteetömiä ja mitkä eivät. Vihreällä näkyy esteetön reitti ja punaisella ei-esteetön reitti.
+[docs/Esteetomyyskartta1.html](Esteettömyyskartta) Helsingin keskustasta sekä [docs/valitulostus1.html](reittikartta), joka näyttää, mitkä kohdat kävelyreitistä ovat esteetömiä ja mitkä eivät. Vihreällä näkyy esteetön reitti ja punaisella ei-esteetön reitti.
 
