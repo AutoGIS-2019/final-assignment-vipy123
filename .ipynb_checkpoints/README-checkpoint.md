@@ -4,25 +4,26 @@
 
 Once you are finished with the final assignment, edit this readme and add "x" to the correct box:
 
-* [ ] Submitted
+* [x] Submitted
 
-* [x] I'm still working on my final assignment. 
+* [ ] I'm still working on my final assignment. 
 
-### Instructions
 
-Read the final assignment instructions from the course webpages [https://autogis.github.io](https://automating-gis-processes.github.io/site/lessons/FA/final-assignment.html). Remember to write readable code, and to provide adequate documentation using inline comments and markdown. Organize all your code(s) / notebook(s) into this repository and **add links to all relevant files to this `README.md`file**. In sum, anyone who downloads this repository should be able to **read your code and documentation** and understand what is going on, and **run your code** in order to reproduce the same results :) 
+## Topic: Unobstructed pedestrian routes in Helsinki center
 
-**Modify this readme so that anyone reading it gets a quick overview of your final work topic, and finds all the necessary input data, code and results.** Add short descriptions, and provide links to relevant files under the topics below (modify the titles according to your topic). You can delete this intro text if you like. 
-
-*Note: If your code requires some python packages not found in the csc notebooks environment, please mention them also in this readme and provide installation instrutions.*
-
-*Note: Don't upload large files into GitHub! If you are using large input files, provide downloading instructions and perhaps a small sample of the data in this repository for demonstrating your workflow.*
-
-## Topic: 
-
-### Input data:
+### Input data: Esteettömyysaineistot exel-taulukoina from the city of Helsinki. (Lähtötiedot)
 
 ### Analysis steps:
 
-### Results:
+1. I received the data of unbstructed routes, areas and voice signaled traffic lights from the city of Helsinki via my collegue. 
+2. Then I studied the data and made small modifications like changing th crs, to be able to unify and join the separate tables.
+3. I filtered the data using a bounding box inside city center area so that I can test the methods faster and because the unobstructed areas were more dense there.
+4. I made buffers of the unobstructed routes and areas to be able to make spatial analysis.
+5. I joined the buffers.
+6. I created folium maps to show the data on an interactive map.
+7. I made analysis of shortest paths, between two given addressses and visualized the obstructedness of the route by using spatial analysis.
+8. And finally saved an html map with the route between two given addresses. 
 
+### Results:
+[Esteettömyyskartta](https://autogis-2019.github.io/final-assignment-vipy123/Esteetomyyskartta1.html) of Helsinki city center unobstructed routes and areas and [reittikartta](https://autogis-2019.github.io/final-assignment-vipy123/valitulostus1.html), that shows the shortest path between two addresses. The unbstructed parts of the route are highlighted with green and obstructed routes with red. 
+The idea was to create my own dijkstra algorithme by using a weighted vector lenghts between nodes. I also wanted to make a small webapp that would have enabled unobstructed route planning with origin and destination addresses, but I ran out of time. also jupyter lab stopped working on the last evening. These ideas can be developed later though.
