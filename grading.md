@@ -7,7 +7,7 @@
 
 # Feedback for the final assignment
 
-Very interesting and important topic for the final work!  If you want, you could discuss further with Joose Helle who has developed the clean path application (in Javascript) :). Also, if you haven't already taken it, I recommend that you have a look at the full stack course offered by the CS department :)
+Very interesting and important topic for the final work!  If you want, you could discuss further with Joose Helle who has developed the clean path application (in Javascript) :). Also, if you haven't already taken it, I recommend that you have a look at the full stack course offered by the CS department :) By the way, is this repository public on purpose? It can be, but just that you are aware of it!
 
 Please find detailed feedback below. Suggestions for improvement are marked as **bold**.
 
